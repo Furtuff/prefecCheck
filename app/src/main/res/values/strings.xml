@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Battery warner</string>
+    <string name="alert_message">Hey ! débranche la batterie si tu ne veux pas que ça pète !</string>
+    <string name="notification_message">essaye encore</string>
+    <string name="stop_button">stop</string>
 </resources>
