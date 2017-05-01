@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.wildcodeschool.exam.batterywarner">
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     œ
@@ -21,7 +24,7 @@
 
         <service android:name=".Service.BackgroundService">
             <intent-filter>
-                <action android:name="fr.wildcodeschool.exam.batterywarner.Service.BackgroundService"></action>
+                <action android:name="fr.wildcodeschool.exam.batterywarner.Service.BackgroundService" />
             </intent-filter>
             />
         </service>
@@ -35,6 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.PermissionRequest"></activity>
     </application>
 
 </manifest>

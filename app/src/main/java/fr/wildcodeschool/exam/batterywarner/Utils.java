@@ -1,6 +1,7 @@
 package fr.wildcodeschool.exam.batterywarner;
 
 import android.content.Context;
+import android.util.Log;
 
 import fr.wildcodeschool.exam.batterywarner.Model.BatteryChecker;
 
@@ -17,7 +18,7 @@ public class Utils {
         if (lastpercent == 0) {
             lastpercent = BatteryChecker.instance.checkBatteryLevel(context);
         }
-
+        Log.d("Percent", String.valueOf(lastpercent));
         return lastpercent;
     }
 

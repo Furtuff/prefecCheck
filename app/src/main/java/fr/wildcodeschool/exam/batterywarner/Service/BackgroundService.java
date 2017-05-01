@@ -56,7 +56,7 @@ public class BackgroundService extends Service {
         } else {
             alarmMgr.cancel(pendingIntent);
         }
-        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, AlarmReceiver.FM_ALARM_INTERVAL, pendingIntent);
+        alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, AlarmReceiver.FM_ALARM_INTERVAL, pendingIntent);
     }
 
 
