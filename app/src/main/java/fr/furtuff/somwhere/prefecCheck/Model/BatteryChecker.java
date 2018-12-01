@@ -1,4 +1,4 @@
-package fr.wildcodeschool.exam.batterywarner.Model;
+package fr.furtuff.somwhere.prefecCheck.Model;
 
 import android.content.Context;
 import android.content.Intent;

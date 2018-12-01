@@ -1,4 +1,4 @@
-package fr.wildcodeschool.exam.batterywarner.Service;
+package fr.furtuff.somwhere.prefecCheck.Service;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -9,7 +9,9 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import fr.wildcodeschool.exam.batterywarner.broadcast.AlarmReceiver;
+import java.util.Calendar;
+
+import fr.furtuff.somwhere.prefecCheck.broadcast.AlarmReceiver;
 
 /**
  * Created by tuffery on 27/04/17.
@@ -33,9 +35,9 @@ public class BackgroundService extends Service {
 
     @Override
     public void onDestroy() {
-        if (alarmMgr != null && pendingIntent != null) {
+        /*f (alarmMgr != null && pendingIntent != null) {
             alarmMgr.cancel(pendingIntent);
-        }
+        }*/
         super.onDestroy();
     }
 
@@ -52,11 +54,12 @@ public class BackgroundService extends Service {
         }
         if (pendingIntent == null) {
             Intent alarmReceiver = new Intent(this, AlarmReceiver.class);
+            alarmReceiver.setAction("ça s'en va et ça revient");
             pendingIntent = PendingIntent.getBroadcast(this, AlarmReceiver.FM_ALARM_REQUEST_CODE, alarmReceiver, PendingIntent.FLAG_CANCEL_CURRENT);
         } else {
             alarmMgr.cancel(pendingIntent);
         }
-        alarmMgr.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, AlarmReceiver.FM_ALARM_INTERVAL, pendingIntent);
+        alarmMgr.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + AlarmReceiver.FM_ALARM_INTERVAL, pendingIntent);
     }
 
 

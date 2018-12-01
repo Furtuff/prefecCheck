@@ -1,10 +1,10 @@
-package fr.wildcodeschool.exam.batterywarner.broadcast;
+package fr.furtuff.somwhere.prefecCheck.broadcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import fr.wildcodeschool.exam.batterywarner.Service.BackgroundService;
+import fr.furtuff.somwhere.prefecCheck.Service.BackgroundService;
 
 /**
  * Created by tuffery on 27/04/17.

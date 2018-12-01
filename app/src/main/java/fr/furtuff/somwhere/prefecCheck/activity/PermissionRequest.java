@@ -1,4 +1,4 @@
-package fr.wildcodeschool.exam.batterywarner.activity;
+package fr.furtuff.somwhere.prefecCheck.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -9,10 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 
-import fr.wildcodeschool.exam.batterywarner.R;
+import fr.furtuff.somwhere.prefecCheck.R;
 
 public class PermissionRequest extends AppCompatActivity {
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 12354;
 
     public static Intent buildIntentKeyguard(Context context) {
         Intent intent = new Intent(context, PermissionRequest.class);
@@ -26,9 +26,9 @@ public class PermissionRequest extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_request);
         if (getIntent() != null) {
-            requestPermissions(new String[]{Manifest.permission.DISABLE_KEYGUARD}, REQUEST_CODE_ASK_PERMISSIONS);
+            requestPermissions(new String[]{Manifest.permission.DISABLE_KEYGUARD, Manifest.permission.INTERNET}, REQUEST_CODE_ASK_PERMISSIONS);
         } else
-            requestPermissions(new String[]{android.Manifest.permission.RECEIVE_BOOT_COMPLETED}, REQUEST_CODE_ASK_PERMISSIONS);
+            requestPermissions(new String[]{Manifest.permission.RECEIVE_BOOT_COMPLETED, Manifest.permission.INTERNET}, REQUEST_CODE_ASK_PERMISSIONS);
 
     }
 

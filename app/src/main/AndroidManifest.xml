@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.wildcodeschool.exam.batterywarner">
+    package="fr.furtuff.somwhere.prefecCheck">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    œ
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:name=".application.BatteryWarner"
+        android:name="fr.furtuff.somwhere.prefecCheck.application.PrefecCheck"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".broadcast.BootCompleteReceiver">
+        <receiver android:name="fr.furtuff.somwhere.prefecCheck.broadcast.BootCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".broadcast.AlarmReceiver" />
+        <receiver android:name="fr.furtuff.somwhere.prefecCheck.broadcast.AlarmReceiver">
+            <intent-filter>
+                <action android:name="ça s'en va et ça revient" />
+            </intent-filter>
+        </receiver>
 
-        <service android:name=".Service.BackgroundService">
+        <service android:name="fr.furtuff.somwhere.prefecCheck.Service.BackgroundService">
             <intent-filter>
                 <action android:name="fr.wildcodeschool.exam.batterywarner.Service.BackgroundService" />
             </intent-filter>
@@ -30,15 +35,15 @@
         </service>
 
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/Theme.Transparent">
+            android:name="fr.furtuff.somwhere.prefecCheck.MainActivity"
+            android:theme="@style/Theme.AppCompat.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PermissionRequest"></activity>
+        <activity android:name="fr.furtuff.somwhere.prefecCheck.activity.PermissionRequest"></activity>
     </application>
 
 </manifest>

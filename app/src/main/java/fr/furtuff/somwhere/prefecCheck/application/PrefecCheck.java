@@ -1,4 +1,4 @@
-package fr.wildcodeschool.exam.batterywarner.application;
+package fr.furtuff.somwhere.prefecCheck.application;
 
 import android.app.Application;
 import android.content.Intent;
@@ -6,14 +6,14 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 
-import fr.wildcodeschool.exam.batterywarner.Service.BackgroundService;
-import fr.wildcodeschool.exam.batterywarner.activity.PermissionRequest;
+import fr.furtuff.somwhere.prefecCheck.Service.BackgroundService;
+import fr.furtuff.somwhere.prefecCheck.activity.PermissionRequest;
 
 /**
  * Created by tuffery on 27/04/17.
  */
 
-public class BatteryWarner extends Application {
+public class PrefecCheck extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

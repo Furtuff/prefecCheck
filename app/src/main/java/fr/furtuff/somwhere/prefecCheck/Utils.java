@@ -1,9 +1,9 @@
-package fr.wildcodeschool.exam.batterywarner;
+package fr.furtuff.somwhere.prefecCheck;
 
 import android.content.Context;
 import android.util.Log;
 
-import fr.wildcodeschool.exam.batterywarner.Model.BatteryChecker;
+import fr.furtuff.somwhere.prefecCheck.Model.BatteryChecker;
 
 /**
  * Created by tuffery on 27/04/17.
