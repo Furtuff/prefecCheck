@@ -24,6 +24,8 @@ import android.widget.RemoteViews;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -49,10 +51,11 @@ import retrofit2.Response;
 
 public class AlarmReceiver extends BroadcastReceiver {
     public static final int FM_ALARM_REQUEST_CODE = 0;
-    public static final long FM_ALARM_INTERVAL = AlarmManager.INTERVAL_HOUR;//AlarmManager.INTERVAL_HOUR; //300000L;
+    public static final long FM_ALARM_INTERVAL = AlarmManager.INTERVAL_HOUR; //300000L;
     final static String STOP = "STOP";
     private final static List<Integer> guichets = Arrays.asList(14500, 14510, 14520, 16456, 17481);
     private static final String nextButton = "Etape+suivante";
+    private String stringFormat = "DD-HH-MM";
     static MediaPlayer sound;
     static AlertDialog alertDialog;
     private static boolean isPlanningSucces = false;
@@ -160,7 +163,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
                             document += readed;
                         }
-                        if (!document.contains("Il n'existe plus de plage horaire libre pour votre demande de rendez-vous")) { //Il n'existe plus de plage horaire libre pour votre demande de rendez-vous
+                        if (!document.contains("Il n'existe plus de plage horaire libre pour votre demande de rendez-vous. Veuillez recommencer ultérieurement.")) { //Il n'existe plus de plage horaire libre pour votre demande de rendez-vous
                             //showPopup(context);
                             showNotification(context, guichetNumber);
                             isPlanningSucces = true;
@@ -168,7 +171,9 @@ public class AlarmReceiver extends BroadcastReceiver {
                     } catch (Exception e) {
 
                     }
-                    sharedPreferences.edit().putString("guichet " + guichetId, String.valueOf(isSuccess));
+
+                    sharedPreferences.edit().putString(new SimpleDateFormat(stringFormat).format(Calendar.getInstance().getTime()) + " guichet " + guichetNumber, String.valueOf(isSuccess)).commit();
+
                 }
             }
 
