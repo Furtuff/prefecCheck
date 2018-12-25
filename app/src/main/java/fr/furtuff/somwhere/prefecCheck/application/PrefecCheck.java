@@ -1,12 +1,14 @@
 package fr.furtuff.somwhere.prefecCheck.application;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 
-import fr.furtuff.somwhere.prefecCheck.Service.BackgroundService;
+import fr.furtuff.somwhere.prefecCheck.Utils;
 import fr.furtuff.somwhere.prefecCheck.activity.PermissionRequest;
 
 /**
@@ -14,6 +16,8 @@ import fr.furtuff.somwhere.prefecCheck.activity.PermissionRequest;
  */
 
 public class PrefecCheck extends Application {
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -35,7 +39,9 @@ public class PrefecCheck extends Application {
             }
 
         }
-        startService(BackgroundService.buildBackgroundServiceIntent(this));
+
+        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Utils.setupAlarm(this, alarmMgr);
     }
 
 

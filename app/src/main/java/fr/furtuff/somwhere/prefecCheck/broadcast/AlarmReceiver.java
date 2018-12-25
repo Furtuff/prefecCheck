@@ -8,7 +8,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -21,24 +20,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RemoteViews;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
 
-import fr.furtuff.somwhere.prefecCheck.MainActivity;
 import fr.furtuff.somwhere.prefecCheck.R;
-import fr.furtuff.somwhere.prefecCheck.Service.Prefecture;
-import fr.furtuff.somwhere.prefecCheck.Service.Rest;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import fr.furtuff.somwhere.prefecCheck.Service.LoadPlaningIntentService;
 
 /**
  * Created by tuffery on 27/04/17.
@@ -54,20 +41,18 @@ public class AlarmReceiver extends BroadcastReceiver {
     public static final long FM_ALARM_INTERVAL = AlarmManager.INTERVAL_HOUR; //300000L;
     final static String STOP = "STOP";
     private final static List<Integer> guichets = Arrays.asList(14500, 14510, 14520, 16456, 17481);
-    private static final String nextButton = "Etape+suivante";
-    private String stringFormat = "DD-HH-MM";
+    public static final String nextButton = "Etape+suivante";
+    public final static String stringFormat = "dd-HH-MM";
     static MediaPlayer sound;
     static AlertDialog alertDialog;
-    private static boolean isPlanningSucces = false;
+    public static boolean isPlanningSucces = false;
     private static AlarmManager alarmMgr;
     private static PendingIntent pendingIntent;
     Vibrator v;
     Button button;
-    private SharedPreferences sharedPreferences;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        sharedPreferences = context.getSharedPreferences(MainActivity.sharedArea, Context.MODE_PRIVATE);
         for (int i = 0; i < guichets.size(); i++) {
             sendCall(context, guichets.get(i), i + 1);
         }
@@ -87,7 +72,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
 
-    public void showNotification(Context context, int guichetNumber) {
+    public static void showNotification(Context context, int guichetNumber) {
         NotificationCompat.Builder secondChanceNotif = new NotificationCompat.Builder(context, "3616 HULA").setSmallIcon(android.R.mipmap.sym_def_app_icon);
         RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_custom);
 
@@ -144,44 +129,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private void sendCall(final Context context, final Integer guichetId, final int guichetNumber) {
-        Prefecture prefecture = Rest.getInstance().getPrefecture();
-        prefecture.loadPlanning(nextButton, guichetId).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                //Decode the response text/html (gzip encoded)
-                boolean isSuccess = false;
-                if (response.code() == 200) {
-                    try {
-                        ByteArrayInputStream bais = new ByteArrayInputStream(((ResponseBody) response.body()).bytes());
-                        GZIPInputStream gzis = new GZIPInputStream(bais);
-                        InputStreamReader reader = new InputStreamReader(gzis);
-                        BufferedReader in = new BufferedReader(reader);
-                        String readed;
-                        String document = "";
-                        while ((readed = in.readLine()) != null) {
-
-                            document += readed;
-                        }
-                        if (!document.contains("Il n'existe plus de plage horaire libre pour votre demande de rendez-vous. Veuillez recommencer ultérieurement.")) { //Il n'existe plus de plage horaire libre pour votre demande de rendez-vous
-                            //showPopup(context);
-                            showNotification(context, guichetNumber);
-                            isPlanningSucces = true;
-                        }
-                    } catch (Exception e) {
-
-                    }
-
-                    sharedPreferences.edit().putString(new SimpleDateFormat(stringFormat).format(Calendar.getInstance().getTime()) + " guichet " + guichetNumber, String.valueOf(isSuccess)).commit();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
+        Intent intent = new Intent(context, LoadPlaningIntentService.class);
+        intent.putExtra(LoadPlaningIntentService.guichetId, guichetId);
+        intent.putExtra(LoadPlaningIntentService.guichetNumber, guichetNumber);
+        context.startService(intent);
 
     }
 

@@ -27,12 +27,9 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="fr.furtuff.somwhere.prefecCheck.Service.BackgroundService">
-            <intent-filter>
-                <action android:name="fr.wildcodeschool.exam.batterywarner.Service.BackgroundService" />
-            </intent-filter>
-            />
-        </service>
+        <service
+            android:name=".Service.LoadPlaningIntentService"
+            android:exported="false" />
 
         <activity
             android:name="fr.furtuff.somwhere.prefecCheck.MainActivity"

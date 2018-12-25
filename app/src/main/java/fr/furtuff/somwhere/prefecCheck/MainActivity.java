@@ -3,11 +3,11 @@ package fr.furtuff.somwhere.prefecCheck;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -28,8 +28,10 @@ public class MainActivity extends Activity {
         for (String elem : pref.getAll().keySet()) {
             log.add(elem + " : " + pref.getAll().get(elem));
         }
+        Collections.sort(log);
 
         list.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, log));
+
     }
 
 }
